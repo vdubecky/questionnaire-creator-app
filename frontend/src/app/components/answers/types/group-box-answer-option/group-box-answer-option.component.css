@@ -1,0 +1,10 @@
+.group-box-answer-option {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  align-items: center;
+}
+
+.group-box-answer-option__text {
+  width: 100%;
+}

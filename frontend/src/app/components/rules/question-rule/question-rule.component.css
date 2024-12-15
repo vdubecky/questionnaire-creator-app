@@ -1,0 +1,19 @@
+.question-rule {
+  padding: 20px;
+  margin: 10px;
+}
+
+.question-rule__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.question-rule__then mat-form-field {
+  width: 100%;
+  margin: 10px;
+}
+
+.question-rule__logical-operator {
+  display: flex;
+  justify-content: space-between;
+}

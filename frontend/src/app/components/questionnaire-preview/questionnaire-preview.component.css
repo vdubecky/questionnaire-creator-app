@@ -1,0 +1,17 @@
+.questionnaire-preview {
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.questionnaire-preview-buttons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.questionnaire-preview__metadata {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

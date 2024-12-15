@@ -1,0 +1,31 @@
+<div class="condition">
+  <div class="condition__definition">
+    <mat-form-field>
+      <mat-label>Otázka</mat-label>
+      <mat-select [(value)]="selectedQuestion" [disabled]="manager.metadata.published">
+        <mat-option
+          *ngFor="let question of manager.getQuestions(condition.rootQuestion)"
+          [value]="question">
+          {{ question.data.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Operace</mat-label>
+      <mat-select [(value)]="condition.selectedComparisonMethod" [disabled]="manager.metadata.published">
+        <mat-option
+          *ngFor="let method of condition.selectedQuestion.answer.getComparisonMethods()"
+          [value]="method">
+          {{ method.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="condition__value">
+    <app-answer-component [answer]="data.conditionAnswer"
+                          [editable]="!manager.metadata.published"
+                          [isConditionPreview]="true"/>
+  </div>
+</div>

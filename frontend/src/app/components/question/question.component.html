@@ -1,0 +1,43 @@
+<div class="question bordered-shadow-box">
+  <div class="question-header">
+    <div class="question-header__preview">
+      <h2> {{ question.data.title }} </h2>
+      <p *ngIf="!isExpanded"> {{question.data.description}} </p>
+    </div>
+
+    <div class="question-header__buttons">
+      <button mat-icon-button (click)="deleteQuestion()" *ngIf="isExpanded && question.editable">
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="toggleExpanded()">
+        <mat-icon>{{ isExpanded ? "expand_less" : "expand_more" }}</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="question-content" [hidden]="!isExpanded">
+    <form class="question-content__form">
+      <mat-form-field color="primary">
+        <mat-label>Otázka</mat-label>
+        <input matInput required name="questionTitle" [(ngModel)]="question.data.title"
+               [maxLength]="MAX_TITLE_LENGTH"
+               [disabled]="!question.editable"/>
+        <mat-hint align="end">{{question.data.title.length || 0}}/{{MAX_TITLE_LENGTH}}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Popis otázky</mat-label>
+        <textarea matInput cdkTextareaAutosize name="questionDescription"
+                  [(ngModel)]="question.data.description"
+                  [maxLength]="MAX_DESCRIPTION_LENGTH"
+                  [disabled]="!question.editable"></textarea>
+        <mat-hint align="end">{{question.data.description.length || 0}}/{{MAX_DESCRIPTION_LENGTH}}</mat-hint>
+      </mat-form-field>
+
+      <app-answer-component [answer]="question.answer"
+                            (onAnswerChanged)="onAnswerChanged($event)"
+                            [editable]="question.editable"/>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="answer-section">
+  <mat-form-field *ngIf="!isConditionPreview">
+
+    <!-- Using <mat-label> with <mat-select> cause "Incorrect use of <label for=FORM_ELEMENT> issue".
+    This is one of the known bugs in Angular Material that is not fixed yet.
+    See https://github.com/angular/components/issues/27241 for more information. -->
+
+    <mat-label>Typ odpovědi</mat-label>
+    <mat-select
+      name="answerTypeSelect"
+      [disabled]="!editable"
+      [(ngModel)]="answerType">
+      <mat-option
+        *ngFor="let option of AnswerComponentsManager.getAnswerTypeStrings()"
+        [value]="option.type">
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+  <ng-container [ngSwitch]="answer.group">
+    <app-simple-text-answer *ngSwitchCase="AnswerTypeGroup.SIMPLE_TEXT"
+                            [isConditionPreview]="isConditionPreview"
+                            [editable]="editable"
+                            [answerData]="textAnswer"/>
+
+    <app-group-box-answer *ngSwitchCase="AnswerTypeGroup.GROUP_BOX"
+                          [isConditionPreview]="isConditionPreview"
+                          [editable]="editable"
+                          [answerData]="groupAnswer"/>
+
+    <app-slider-answer-type *ngSwitchCase="AnswerTypeGroup.SLIDER"
+                            [isConditionPreview]="isConditionPreview"
+                            [editable]="editable"
+                            [answerData]="sliderAnswer"/>
+  </ng-container>
+</div>

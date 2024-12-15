@@ -1,0 +1,22 @@
+<div class="slider-answer">
+  <mat-form-field class="slider-input-field">
+    <mat-label>Minimum</mat-label>
+    <input matInput name="sliderMinimumInput" type="number"
+           [disabled]="!editable || isConditionPreview"
+           [(ngModel)]="answerData.config.min"/>
+  </mat-form-field>
+
+  <mat-slider showTickMarks discrete
+              [displayWith]="formatValue" class="slider-input"
+              [min] ="answerData.config.min"
+              [max]="answerData.config.max">
+    <input matSliderThumb [(ngModel)]="value" [disabled]="!editable || !isConditionPreview">
+  </mat-slider>
+
+  <mat-form-field class="slider-input-field">
+    <mat-label>Maximum</mat-label>
+    <input matInput name="sliderMaximumInput" type="number"
+           [disabled]="!editable || isConditionPreview"
+           [(ngModel)]="answerData.config.max"/>
+  </mat-form-field>
+</div>

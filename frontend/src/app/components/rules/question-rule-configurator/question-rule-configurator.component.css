@@ -1,0 +1,22 @@
+.question-rule {
+  padding: 20px;
+  margin: 10px;
+}
+
+.question-rules__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.question-rules__header-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+}
+
+.question-rules__content-form mat-form-field {
+  width: 100%;
+}

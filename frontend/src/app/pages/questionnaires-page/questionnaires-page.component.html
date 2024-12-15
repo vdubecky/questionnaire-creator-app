@@ -1,0 +1,16 @@
+<div class="questionnaires-container">
+  <div class="questionnaires-container__header">
+    <h1>Vytvořené dotazníky</h1>
+  </div>
+  <app-questionnaire-preview  *ngFor="let questionnaire of getQuestionnaires"
+                              [model]="questionnaire"
+                              (onDeleteQuestionnaire)="requestQuestionnaireDeletion($event)"
+                              (onOpenQuestionnaire)="openQuestionnaire($event)"
+                              (onPublishButtonClicked)="requestQuestionnairePublishing($event)"/>
+
+  <button mat-fab extended class="questionnaires-container__create-button"
+          (click)="createQuestionnaire()">
+    <mat-icon>add</mat-icon>
+    Nový dotazník
+  </button>
+</div>

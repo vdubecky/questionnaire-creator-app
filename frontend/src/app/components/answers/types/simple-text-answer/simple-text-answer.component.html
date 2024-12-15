@@ -1,0 +1,4 @@
+<mat-form-field class="simple-text-answer">
+  <mat-label>{{ getAnswerTypeLabel }}</mat-label>
+  <input matInput [type]="getSimpleAnswerType" [disabled]="!editable || !isConditionPreview" [(ngModel)]="value"/>
+</mat-form-field>

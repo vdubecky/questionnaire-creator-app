@@ -1,0 +1,16 @@
+.slider-answer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.slider-input-field {
+  flex: 1;
+  max-width: 25%;
+}
+
+.slider-input {
+  flex: 2;
+  margin: 0 15px;
+}

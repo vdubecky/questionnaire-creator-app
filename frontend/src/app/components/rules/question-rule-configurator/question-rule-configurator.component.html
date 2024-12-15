@@ -1,0 +1,34 @@
+<div class="question-rule bordered-shadow-box">
+  <div class="question-rules__header">
+    <h2>{{ question.data.title }}</h2>
+    <div class="question-rules__header-buttons">
+      <button mat-flat-button (click)="addRule()" *ngIf="isExpanded && question.editable">
+        <mat-icon>add</mat-icon>
+        Přidat pravidlo
+      </button>
+
+      <button mat-icon-button (click)="toggleExpanded()">
+        <mat-icon>{{ getHideButtonIcon }}</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <form class="question-rules__content-form" *ngIf="isExpanded">
+    <app-question-rule
+      *ngFor="let rule of rules"
+      (onRuleDeleteButtonClicked)="onRuleDeleted(rule)"
+      [ruleData]="rule"/>
+
+    <h3>{{rules.length === 0 ? "Vždy následuje" : "V ostatních případech následuje"}}</h3>
+    <mat-form-field>
+      <mat-label>Otázka</mat-label>
+      <mat-select [(value)]="configurator.otherwiseQuestion" [disabled]="!question.editable">
+        <mat-option
+          *ngFor="let question of question.manager.getQuestions()"
+          [value]="question">
+            {{ question.data.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>

@@ -1,0 +1,52 @@
+<div class="question-rule bordered-shadow-box">
+
+  <div class="question-rule__header">
+    <h3>Pokud</h3>
+    <div>
+      <button mat-flat-button (click)="deleteRule()" *ngIf="!manager.metadata.published">
+        <mat-icon>delete_forever</mat-icon>
+        Smazat pravidlo
+      </button>
+
+      <button mat-flat-button (click)="addCondition()" *ngIf="!manager.metadata.published">
+        <mat-icon>add</mat-icon>
+        Přidat podmínku
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let condition of ruleData.conditions; let i = index">
+    <app-rule-condition [data]="condition.condition"/>
+
+    <div class="question-rule__logical-operator" *ngIf="i < ruleData.conditions.length - 1">
+      <mat-form-field>
+        <mat-label>Logický operátor</mat-label>
+        <mat-select [(value)]="condition.operator" [disabled]="manager.metadata.published">
+          <mat-option *ngFor="let operator of Rule.LOGICAL_OPERATORS" [value]="operator.operator">
+            {{ operator.operatorLabel }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-flat-button (click)="deleteCondition(ruleData.conditions[i + 1])" *ngIf="!manager.metadata.published">
+        <mat-icon>delete_forever</mat-icon>
+        Smazat podmínku
+      </button>
+    </div>
+  </ng-container>
+
+  <div class="question-rule__then">
+    <h3>Pak následuje</h3>
+    <mat-form-field>
+      <mat-label>Otázka</mat-label>
+      <mat-select [(value)]="ruleData.nextQuestion" [disabled]="manager.metadata.published">
+        <mat-option
+          *ngFor="let question of manager.getQuestions()"
+          [value]="question">
+          {{ question.data.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</div>

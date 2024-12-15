@@ -1,0 +1,18 @@
+.condition__definition {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.condition__definition mat-form-field {
+  width: 100%;
+}
+
+.condition__value mat-form-field {
+  width: 100%;
+}
+
+.condition__remove-button {
+  margin-left: auto;
+}

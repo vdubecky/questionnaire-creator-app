@@ -1,0 +1,36 @@
+<mat-card class = "questionnaire-preview bordered-shadow-box">
+  <mat-card-header>
+    <mat-card-title>{{ model.name }}</mat-card-title>
+    <div class="questionnaire-preview-buttons">
+      <button mat-flat-button (click)="publishQuestionnaire()" *ngIf="!model.published">
+        <mat-icon>publish</mat-icon>
+        Publikovat
+      </button>
+      <button mat-flat-button (click)="openQuestionnaire()">
+        <mat-icon>settings</mat-icon>
+        {{model.published ? 'Zobrazit' : 'Upravit'}}
+      </button>
+      <button mat-flat-button (click)="deleteQuestionnaire()">
+        <mat-icon>delete_forever</mat-icon>
+        Smazat
+      </button>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{ model.description }}</p>
+
+    <div class="questionnaire-preview__metadata">
+      <ng-container *ngIf="model.validFrom && model.validTo; else noTimeLimit">
+        <p>
+          Platnost: {{ model.validFrom | date: 'dd.MM.yyyy' }} - {{ model.validTo | date: 'dd.MM.yyyy' }}
+        </p>
+      </ng-container>
+      <ng-template #noTimeLimit>
+        <p>
+          Neomezená platnost
+        </p>
+      </ng-template>
+    </div>
+  </mat-card-content>
+</mat-card>

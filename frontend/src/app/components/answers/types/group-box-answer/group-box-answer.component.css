@@ -1,0 +1,4 @@
+.group-box-answer {
+  display: flex;
+  flex-direction: column;
+}

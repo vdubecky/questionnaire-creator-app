@@ -1,0 +1,22 @@
+<div class="group-box-answer-option">
+  <mat-checkbox *ngIf="optionType === GroupBoxAnswerType.CHECKBOX"
+                [disabled]="!isConditionPreview || !editable"
+                [(ngModel)]="option.checked"/>
+
+  <mat-radio-button *ngIf="optionType === GroupBoxAnswerType.RADIO"
+                    [disabled]="!isConditionPreview || !editable"
+                    [value]="option"
+                    [checked]="option.checked"
+  name="asas"/>
+
+  <!-- subscriptSizing="dynamic" hides unused hint wrapper -->
+  <mat-form-field class="group-box-answer-option__text" subscriptSizing="dynamic">
+    <mat-label>Popis</mat-label>
+    <input matInput required [(ngModel)]="option.optionText" [disabled]="!editable || isConditionPreview" [maxLength]="MAX_OPTION_TEXT_LENGTH"/>
+    <mat-hint align="end">{{option.optionText.length || 0}}/{{MAX_OPTION_TEXT_LENGTH}}</mat-hint>
+  </mat-form-field>
+
+  <button mat-icon-button (click)="deleteOption()" *ngIf="editable && !isConditionPreview">
+    <mat-icon>delete_forever</mat-icon>
+  </button>
+</div>

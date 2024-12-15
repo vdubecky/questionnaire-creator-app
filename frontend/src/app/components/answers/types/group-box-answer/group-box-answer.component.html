@@ -1,0 +1,26 @@
+<div class="group-box-answer">
+  <form>
+    <mat-radio-group *ngIf="type === GroupBoxAnswerType.RADIO" [(ngModel)]="selected" [name]="id">
+      <app-group-box-answer-option  *ngFor="let option of getOptions"
+                                    [isConditionPreview]="isConditionPreview"
+                                    [option]="option"
+                                    [optionType]="type"
+                                    [editable]="editable"
+                                    (onDeleteButtonClicked)="onDeleteButtonClicked($event)"/>
+    </mat-radio-group>
+
+    <ng-container *ngIf="type === GroupBoxAnswerType.CHECKBOX">
+      <app-group-box-answer-option  *ngFor="let option of getOptions"
+                                    [isConditionPreview]="isConditionPreview"
+                                    [option]="option"
+                                    [optionType]="type"
+                                    [editable]="editable"
+                                    (onDeleteButtonClicked)="onDeleteButtonClicked($event)"/>
+    </ng-container>
+  </form>
+
+    <button mat-flat-button (click)="addOption()" *ngIf="editable && !isConditionPreview">
+      <mat-icon>add</mat-icon>
+      Přidat možnost
+    </button>
+</div>

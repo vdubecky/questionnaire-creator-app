@@ -1,0 +1,103 @@
+<button mat-fab extended class="back-button" (click)="onBackButtonClick()">
+  <mat-icon>home</mat-icon>
+  Zpět
+</button>
+
+<div class="questionnaire-page">
+  <div class="questionnaire__header">
+    <h1>Editor dotazníku</h1>
+
+    <form class="questionnaire__header-form bordered-shadow-box">
+      <mat-form-field>
+        <mat-label>Název dotazníku</mat-label>
+        <input matInput required name="questionnaire_title"
+               [(ngModel)]="manager.header.title"
+               [maxLength]="MAX_TITLE_LENGTH"
+               [disabled]="manager.metadata.published"/>
+        <mat-hint align="end">{{manager.header.title.length || 0}}/{{MAX_TITLE_LENGTH}}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Popis dotazníku</mat-label>
+        <textarea matInput cdkTextareaAutosize name="questionnaire_description"
+                  [(ngModel)]="manager.header.description"
+                  [maxLength]="MAX_DESCRIPTION_LENGTH"
+                  [disabled]="manager.metadata.published"></textarea>
+        <mat-hint align="end">{{manager.header.description.length || 0}}/{{MAX_DESCRIPTION_LENGTH}}</mat-hint>
+      </mat-form-field>
+
+      <mat-checkbox [(ngModel)]="timeValidityEnabled"
+                    [disabled]="manager.metadata.published"
+                    name="timeValidityEnabledCheckbox">Neomezená platnost</mat-checkbox>
+      <mat-form-field class="settings__date-picker" *ngIf="!timeValidityEnabled">
+        <mat-label>Platnost dotazníku</mat-label>
+        <mat-date-range-input [rangePicker]="picker" (selectionchange)="onDateChange()"
+                              [disabled]="manager.metadata.published">
+          <input matStartDate readonly placeholder="Start date" name="startDate" [(ngModel)]="manager.metadata.validFrom">
+          <input matEndDate readonly placeholder="End date" name="endDate" [(ngModel)]="manager.metadata.validTo">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+      <mat-form-field class="settings__tags-form-field">
+        <mat-label>Tagy</mat-label>
+        <mat-chip-grid #templateChipGrid>
+          <mat-chip-row *ngFor="let tag of manager.metadata.tags" [removable]="true" (removed)="removeTag(tag)">
+            {{ tag }}
+            <button matChipRemove [disabled]="manager.metadata.published">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+        <input
+          placeholder="Nový tag"
+          [maxLength]="MAX_TAG_LENGTH"
+          [matChipInputFor]="templateChipGrid"
+          (matChipInputTokenEnd)="addTag($event)"
+          [disabled]="manager.metadata.published"
+        />
+      </mat-form-field>
+
+    </form>
+  </div>
+
+  <div class="questionnaire__content-section bordered-shadow-box">
+    <div *ngIf="isQuestionsEditor">
+      <div class="questionnaire__section-div">
+        <mat-icon>assignment</mat-icon>
+        <h2>Otázky</h2>
+      </div>
+      <app-question
+        *ngFor="let question of manager.questions" [question]="question"
+        (onQuestionDeleteButtonClicked)="onQuestionDeleted($event)"/>
+    </div>
+
+    <div *ngIf="!isQuestionsEditor">
+      <div class="questionnaire__section-div">
+        <mat-icon>timeline</mat-icon>
+        <h2>Pravidla otázek</h2>
+      </div>
+      <app-question-rule-configurator
+        *ngFor="let question of manager.questions"
+        [question]="question"/>
+    </div>
+  </div>
+
+  <div class="questionnaire-buttons">
+    <button mat-fab extended *ngIf="isQuestionsEditor && !manager.metadata.published"
+            (click)="addQuestion()">
+      <mat-icon>add</mat-icon>
+      Přidat otázku
+    </button>
+    <button mat-fab extended (click)="onConfigurationPageToggle()">
+      <mat-icon>{{isQuestionsEditor ? "timeline" : "assignment"}}</mat-icon>
+      {{ questionConfigButtonText }}
+    </button>
+    <button mat-fab extended type="submit" (click)="saveQuestionnaire(true)" *ngIf="!manager.metadata.published">
+      <mat-icon>save</mat-icon>
+      Uložit
+    </button>
+  </div>
+</div>
